@@ -18,6 +18,8 @@ public class CameraMotor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = playerTransform.position + offset;
+        Vector3 current = playerTransform.position + offset;
+        current.x = 0;
+        transform.position = current;
     }
 }

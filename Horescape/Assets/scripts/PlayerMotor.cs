@@ -16,11 +16,14 @@ public class PlayerMotor : MonoBehaviour
     private float fallingSpeed = 0.0f;
     private float gravity = 1.0f;
 
+    private int hp = 100;
+    public Text hpText;
     // Use this for initialization
     void Start()
     {
         controller = GetComponent<CharacterController>();
         countdown = accelerated;
+        setHPText();
     }
 
     // Update is called once per frame
@@ -52,6 +55,15 @@ public class PlayerMotor : MonoBehaviour
         movement.y = fallingSpeed;
 
         controller.Move(movement * Time.deltaTime);
+
+        if (hp > 0)
+        {
+            setHPText();
+        }
+        else
+        {
+            setHPText("death");
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -61,5 +73,17 @@ public class PlayerMotor : MonoBehaviour
             other.gameObject.SetActive(false);
         }
         forwardSpeed -= 1.0f;
+        hp -= 40;
+    }
+    void setHPText(string status = "")
+    {
+        if (status == "")
+        {
+            hpText.text = "HP:" + hp.ToString();
+        }
+        else
+        {
+            hpText.text = status;
+        }
     }
 }
