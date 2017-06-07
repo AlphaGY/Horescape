@@ -13,12 +13,13 @@ public class PlayerMotor : MonoBehaviour
     private float accelerated = 5.0f;
     // countdown for accelerating
     private float countdown;
-    private float fallingSpeed = 0.0f;
-    private float gravity = 1.0f;
+    private float fallingSpeed;
+    private float gravity = 2.0f;
 
     private int hp = 100;
     public Text hpText;
     // Use this for initialization
+    private bool isDeath = false;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -27,7 +28,7 @@ public class PlayerMotor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         movement = Vector3.zero;
         // speed up every [accelerated] seconds
@@ -46,7 +47,7 @@ public class PlayerMotor : MonoBehaviour
         // gravity
         if (controller.isGrounded)
         {
-            fallingSpeed = 0.0f;
+            fallingSpeed = -0.1f;
         }
         else
         {
@@ -55,14 +56,19 @@ public class PlayerMotor : MonoBehaviour
         movement.y = fallingSpeed;
 
         controller.Move(movement * Time.deltaTime);
-
-        if (hp > 0)
+        // falling into the fall =death
+        if (controller.transform.position.y < 0)
         {
-            setHPText();
+            isDeath = true;
+        }
+        // display hp & status
+        if (isDeath)
+        {
+            setHPText("death");
         }
         else
         {
-            setHPText("death");
+            setHPText();
         }
     }
 
@@ -74,6 +80,10 @@ public class PlayerMotor : MonoBehaviour
         }
         forwardSpeed -= 1.0f;
         hp -= 40;
+        if (hp <= 0)
+        {
+            isDeath = true;
+        }
     }
     void setHPText(string status = "")
     {
