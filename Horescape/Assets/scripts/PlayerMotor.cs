@@ -32,7 +32,7 @@ public class PlayerMotor : MonoBehaviour
         // speed up every [accelerated] seconds
         if (countdown > 0)
         {
-            countdown -= (accelerated * Time.deltaTime);
+            countdown -= Time.deltaTime;
         }
         else
         {
@@ -50,7 +50,6 @@ public class PlayerMotor : MonoBehaviour
         else
         {
             fallingSpeed -= gravity;
-            Debug.Log("not grounded");
         }
         movement.y = fallingSpeed;
 
@@ -69,8 +68,7 @@ public class PlayerMotor : MonoBehaviour
         if (other.gameObject.CompareTag("Hand"))
         {
             other.gameObject.SetActive(false);
+            playerHealth.takeDamage(40);
         }
-        forwardSpeed -= 1.0f;
-        playerHealth.takeDamage(40);
     }
 }

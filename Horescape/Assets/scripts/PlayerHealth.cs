@@ -13,11 +13,13 @@ public class PlayerHealth : MonoBehaviour
     public Text hpText;
 
     PlayerMotor playerMotor;
+    MonsterMotor monsterMotor;
 
     // Use this for initialization
     void Start()
     {
         playerMotor = GetComponent<PlayerMotor>();
+        monsterMotor = GameObject.FindGameObjectWithTag("Monster").GetComponent<MonsterMotor>();
         currentHP = maxHP;
     }
 
@@ -39,6 +41,8 @@ public class PlayerHealth : MonoBehaviour
     {
         isDead = true;
         hpText.text = "dead";
+        // stop the player and the monster from moving
         playerMotor.enabled = false;
+        monsterMotor.enabled = false;
     }
 }

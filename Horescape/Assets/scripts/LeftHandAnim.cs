@@ -11,7 +11,7 @@ public class LeftHandAnim : MonoBehaviour
     private float distance;
     // display the animation when the left hand is within the display zone of the player
     private float displayZone = 8.0f;
-	// the length of the hand that will be on the screen
+    // the length of the hand that will be on the screen
     private float displayLength = 2.5f;
     private float movingSpeed = 8.0f;
     void Start()

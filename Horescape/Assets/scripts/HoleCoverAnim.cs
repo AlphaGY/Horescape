@@ -10,7 +10,7 @@ public class HoleCoverAnim : MonoBehaviour
     private float distance;
     // display the animation when the hole is within the display zone of the player
     private float displayZone = 8.0f;
-    private float fallingSpeed = 8.0f;
+    private float fallingSpeed = 5.0f;
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
