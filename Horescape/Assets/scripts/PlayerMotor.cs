@@ -13,9 +13,9 @@ public class PlayerMotor : MonoBehaviour
     private float accelerated = 5.0f;
     // countdown for accelerating
     private float countdown;
-    private float fallingSpeed;
-    private float gravity = 20.0f;
-    private float jumpSpeed = 8.0f;
+    private float verticalSpeed;
+    private float gravity = 0.4f;
+    private float jumpHeight = 9.0f;
     // Use this for initialization
 
     PlayerHealth playerHealth;
@@ -45,20 +45,22 @@ public class PlayerMotor : MonoBehaviour
         // gravity
         if (controller.isGrounded)
         {
-            fallingSpeed = -0.1f;
+            if (Input.GetButton("Jump"))
+            {
+                verticalSpeed = jumpHeight;
+            }
+            else
+            {
+                // a small force to keep the player on the ground
+                verticalSpeed = -0.1f;
+            }
         }
         else
         {
-            fallingSpeed -= gravity;
+            verticalSpeed -= gravity;
         }
-        
-        // jump
-		if (controller.isGrounded) {
-            if (Input.GetButton("Jump"))
-                movement.y = jumpSpeed;
-        }
-        movement.y -= gravity * Time.deltaTime;
-        
+        movement.y = verticalSpeed;
+
         controller.Move(movement * Time.deltaTime);
 
         // falling into the fall =death
