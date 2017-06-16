@@ -7,14 +7,15 @@ public class PlayerMotor : MonoBehaviour
 {
 
     private CharacterController controller;
-    private Vector3 movement;
+    private Vector3 movement = Vector3.zero;
     private float forwardSpeed = 5.0f;
     // accelerated speed
     private float accelerated = 5.0f;
     // countdown for accelerating
     private float countdown;
     private float fallingSpeed;
-    private float gravity = 2.0f;
+    private float gravity = 20.0f;
+    private float jumpSpeed = 8.0f;
     // Use this for initialization
 
     PlayerHealth playerHealth;
@@ -28,7 +29,6 @@ public class PlayerMotor : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        movement = Vector3.zero;
         // speed up every [accelerated] seconds
         if (countdown > 0)
         {
@@ -51,8 +51,14 @@ public class PlayerMotor : MonoBehaviour
         {
             fallingSpeed -= gravity;
         }
-        movement.y = fallingSpeed;
-
+        
+        // jump
+		if (controller.isGrounded) {
+            if (Input.GetButton("Jump"))
+                movement.y = jumpSpeed;
+        }
+        movement.y -= gravity * Time.deltaTime;
+        
         controller.Move(movement * Time.deltaTime);
 
         // falling into the fall =death
