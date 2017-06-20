@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HoleCoverAnim : MonoBehaviour
 {
-    private Rigidbody rb;
     private Transform playerTransform;
     // distance between the hole and the player
     private float distance;
@@ -14,7 +13,6 @@ public class HoleCoverAnim : MonoBehaviour
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = GetComponent<Rigidbody>();
     }
     void FixedUpdate()
     {

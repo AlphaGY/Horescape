@@ -5,7 +5,6 @@ using UnityEngine;
 public class LeftHandAnim : MonoBehaviour
 {
     private Vector3 teleportPoint;
-    private Rigidbody rb;
     private Transform playerTransform;
     // distance between the left hand and the player
     private float distance;
@@ -17,7 +16,6 @@ public class LeftHandAnim : MonoBehaviour
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = GetComponent<Rigidbody>();
     }
     void FixedUpdate()
     {

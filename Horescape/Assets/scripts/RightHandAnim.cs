@@ -6,7 +6,6 @@ public class RightHandAnim : MonoBehaviour
 {
 
     private Vector3 teleportPoint;
-    private Rigidbody rb;
     private Transform playerTransform;
     // distance between the right hand and the player
     private float distance;
@@ -18,7 +17,6 @@ public class RightHandAnim : MonoBehaviour
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        rb = GetComponent<Rigidbody>();
     }
     void FixedUpdate()
     {

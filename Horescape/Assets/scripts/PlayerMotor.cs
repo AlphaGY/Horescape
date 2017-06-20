@@ -8,7 +8,7 @@ public class PlayerMotor : MonoBehaviour
 
     private CharacterController controller;
     private Vector3 movement = Vector3.zero;
-    private float forwardSpeed = 5.0f;
+    public float forwardSpeed = 5.0f;
     // accelerated speed
     private float accelerated = 5.0f;
     // countdown for accelerating
@@ -30,11 +30,8 @@ public class PlayerMotor : MonoBehaviour
     void FixedUpdate()
     {
         // speed up every [accelerated] seconds
-        if (countdown > 0)
-        {
-            countdown -= Time.deltaTime;
-        }
-        else
+        countdown -= Time.deltaTime;
+        if (countdown <= 0)
         {
             forwardSpeed += 0.2f;
             countdown = accelerated;

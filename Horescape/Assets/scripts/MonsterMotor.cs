@@ -7,26 +7,29 @@ public class MonsterMotor : MonoBehaviour
 
     private CharacterController controller;
 
-    private Transform playerTransform;
-    private Vector3 playerLastPosition;
     // orginal distance between the monster and the player
-    private Vector3 offset;
-    private Vector3 movement;
+    private PlayerMotor playerMotor;
     private PlayerHealth playerHealth;
     // attack time gap of the monster
+    private Transform playerTransform;
+    private float offset;
+    private Vector3 movement;
+    private float verticalSpeed;
     private float attackGap = 3.0f;
+    private float dashSpeed = 2.0f;
+    private float jumpHeight = 20.0f;
+    private float gravity = 0.4f;
     private float countdown;
-    private bool isAttacking = false;
 
 
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        playerLastPosition = playerTransform.position;
-        offset = playerLastPosition - transform.position;
+        playerMotor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        offset = playerTransform.position.z - transform.position.z;
         countdown = attackGap;
     }
 
@@ -34,33 +37,41 @@ public class MonsterMotor : MonoBehaviour
     void FixedUpdate()
     {
         movement = Vector3.zero;
-        movement.z = playerTransform.position.z - playerLastPosition.z;
-        playerLastPosition = playerTransform.position;
+        // forward speed
+        movement.z = playerMotor.forwardSpeed;
 
+        // attack every [attackGap] seconds
         countdown -= Time.deltaTime;
-        // if has attacked, jump back
-        if (isAttacking)
+        if (countdown <= 0)
         {
-            Debug.Log("jump back");
-            isAttacking = false;
-            // jump backward into its previous position
-            movement -= jump(offset.z/2);
+            movement.z += dashSpeed;
+            verticalSpeed = jumpHeight;
+            countdown = attackGap;
         }
-        else
+        // jumping
+        else if (!controller.isGrounded && transform.position.y > 3.0f)
         {
-            // time to attack
-            if (countdown <= 0)
-            {
-                if (!isAttacking)
-                {
-                    isAttacking = true;
-                    // jump forward to catch the player
-                    movement += jump(offset.z/2);
-                }
-                countdown = attackGap;
-            }
+            movement.z += dashSpeed;
+            verticalSpeed -= gravity;
         }
-        controller.Move(movement);
+        else if ((playerTransform.position.z - transform.position.z) <= offset)
+        {
+            movement.z -= dashSpeed;
+        }
+
+        movement.y = verticalSpeed;
+
+        controller.Move(movement * Time.deltaTime);
+        // keep the monster from falling into holes
+        if (transform.position.y <= 3.0f)
+        {
+            Vector3 onGround = Vector3.zero;
+            onGround.x = transform.position.x;
+            onGround.z = transform.position.z;
+            onGround.y = 3.0f;
+            transform.position = onGround;
+        }
+        Debug.Log(playerTransform.position.z - transform.position.z);
     }
 
     void OnTriggerEnter(Collider other)

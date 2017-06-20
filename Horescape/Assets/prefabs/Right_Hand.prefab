@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33653518843735360}
   - component: {fileID: 136195364059206194}
   - component: {fileID: 23691477630637378}
-  - component: {fileID: 54598718981238402}
   - component: {fileID: 114233597812285406}
   m_Layer: 0
   m_Name: Right_Hand
@@ -83,21 +82,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329008179767102}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54598718981238402
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1329008179767102}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &114233597812285406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,8 +93,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bcfdeda2fd41b4490af5183105811d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportPoint: {x: 0, y: 0, z: 0}
-  rb: {fileID: 0}
 --- !u!136 &136195364059206194
 CapsuleCollider:
   m_ObjectHideFlags: 1
