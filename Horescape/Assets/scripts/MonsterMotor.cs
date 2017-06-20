@@ -71,7 +71,6 @@ public class MonsterMotor : MonoBehaviour
             onGround.y = 3.0f;
             transform.position = onGround;
         }
-        Debug.Log(playerTransform.position.z - transform.position.z);
     }
 
     void OnTriggerEnter(Collider other)

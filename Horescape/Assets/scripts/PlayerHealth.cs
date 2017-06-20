@@ -10,10 +10,10 @@ public class PlayerHealth : MonoBehaviour
     private int currentHP;
     private bool isDead = false;
     public Slider hpBar;
-    public Text hpText;
 
-    PlayerMotor playerMotor;
-    MonsterMotor monsterMotor;
+    private PlayerMotor playerMotor;
+    private MonsterMotor monsterMotor;
+    public Menu menu;
 
     // Use this for initialization
     void Start()
@@ -40,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
     private void death()
     {
         isDead = true;
-        hpText.text = "dead";
+        menu.displayMenu();
         // stop the player and the monster from moving
         playerMotor.enabled = false;
         monsterMotor.enabled = false;
