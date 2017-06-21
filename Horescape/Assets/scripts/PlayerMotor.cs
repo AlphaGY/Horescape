@@ -7,7 +7,7 @@ public class PlayerMotor : MonoBehaviour
 {
 
     private CharacterController controller;
-    private Vector3 movement = Vector3.zero;
+    private Vector3 movement;
     public float forwardSpeed = 5.0f;
     // accelerated speed
     private float accelerated = 5.0f;
@@ -29,6 +29,7 @@ public class PlayerMotor : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        movement = Vector3.zero;
         // speed up every [accelerated] seconds
         countdown -= Time.deltaTime;
         if (countdown <= 0)
@@ -38,7 +39,23 @@ public class PlayerMotor : MonoBehaviour
         }
         movement.z = forwardSpeed;
         // left & right movement from input
-        movement.x = Input.GetAxisRaw("Horizontal") * -5.0f;
+        //movement.x = Input.GetAxisRaw("Horizontal") * -5.0f;
+        if (Input.touchCount > 0)
+        {
+            Touch myTouch = Input.GetTouch(0);
+            if (myTouch.position.y < Screen.height / 2)
+            {
+                if (myTouch.position.x > Screen.width / 2)
+                {
+                    movement.x = -3.0f;
+                }
+                else
+                {
+                    movement.x = 3.0f;
+                }
+            }
+        }
+
         // gravity
         if (controller.isGrounded)
         {
