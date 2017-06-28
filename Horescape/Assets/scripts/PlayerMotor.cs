@@ -87,6 +87,11 @@ public class PlayerMotor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+		if (other.gameObject.CompareTag("Pick Up"))
+		{
+			other.gameObject.SetActive (false);	
+			playerHealth.increaseBlood (20);
+		}
         if (other.gameObject.CompareTag("Hand"))
         {
             other.gameObject.SetActive(false);

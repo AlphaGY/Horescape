@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour
     {
         playerMotor = GetComponent<PlayerMotor>();
         monsterMotor = GameObject.FindGameObjectWithTag("Monster").GetComponent<MonsterMotor>();
-        currentHP = maxHP;
+		currentHP = maxHP;
     }
 
     // Update is called once per frame
@@ -37,6 +37,14 @@ public class PlayerHealth : MonoBehaviour
             death();
         }
     }
+	public void increaseBlood(int amount)
+	{
+		if (currentHP != maxHP) 
+		{
+			currentHP += amount;
+			hpBar.value = currentHP;
+		}
+	}
     private void death()
     {
         isDead = true;

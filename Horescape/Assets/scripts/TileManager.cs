@@ -41,9 +41,30 @@ public class TileManager : MonoBehaviour
     private void spawnTile(int prefabNo = -1)
     {
         GameObject go;
+		//GameObject pickup;
+		int randomValue;
+		//int temple=6;
         if (prefabNo == -1)
         {
-            go = Instantiate(tilePrefabs[randomTileIndex()]) as GameObject;
+			randomValue = randomTileIndex ();
+			go = Instantiate (tilePrefabs [randomValue]) as GameObject;
+			//if (randomValue < 6) 
+			//{
+			//	go = Instantiate (tilePrefabs [randomValue]) as GameObject;
+			//} 
+			//else 
+			//{
+			//	pickup=Instantiate (tilePrefabs [randomValue]) as GameObject;
+			//	while(temple>5)
+			//	{
+			//		temple = randomTileIndex ();
+			//		if (temple < 6) 
+			//		{
+			//			go = Instantiate (tilePrefabs [randomValue]) as GameObject;
+			//		}
+			//	}
+
+			//}
         }
         else
         {
