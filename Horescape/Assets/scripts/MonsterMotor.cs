@@ -16,7 +16,7 @@ public class MonsterMotor : MonoBehaviour
     private Vector3 movement;
     private float verticalSpeed;
     private float attackGap = 3.0f;
-    private float dashSpeed = 2.0f;
+    private float dashSpeed;
     private float jumpHeight = 20.0f;
     private float gravity = 0.4f;
     private float countdown;
@@ -39,6 +39,7 @@ public class MonsterMotor : MonoBehaviour
         movement = Vector3.zero;
         // forward speed
         movement.z = playerMotor.forwardSpeed;
+		dashSpeed = playerMotor.forwardSpeed / 2.0f;
 
         // attack every [attackGap] seconds
         countdown -= Time.deltaTime;
@@ -57,6 +58,7 @@ public class MonsterMotor : MonoBehaviour
         else if ((playerTransform.position.z - transform.position.z) <= offset)
         {
             movement.z -= dashSpeed;
+			countdown = attackGap;
         }
 
         movement.y = verticalSpeed;
@@ -83,7 +85,7 @@ public class MonsterMotor : MonoBehaviour
         // player got caught
         if (other.gameObject.CompareTag("Player"))
         {
-            playerHealth.takeDamage(100);
+            playerHealth.takeDamage(50);
         }
     }
     // jump forward [distance] amount of distance
