@@ -104,7 +104,12 @@ public class PlayerMotor : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag ("Hand")) {
 			other.gameObject.SetActive (false);
+			playerHealth.takeDamage (30);
+		} else if (other.gameObject.CompareTag ("Monster")) {
 			playerHealth.takeDamage (40);
+		} else if (other.gameObject.CompareTag ("Pickup")) {
+			other.gameObject.SetActive (false);
+			playerHealth.regainHealth (20);
 		}
 	}
 }

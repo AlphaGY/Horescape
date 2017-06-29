@@ -27,15 +27,22 @@ public class PlayerHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-
+		hpBar.value = currentHP;
 	}
 
 	public void takeDamage (int amount)
 	{
 		currentHP -= amount;
-		hpBar.value = currentHP;
 		if (currentHP <= 0 & !isDead) {
 			death ();
+		}
+	}
+
+	public void regainHealth (int amount)
+	{
+		currentHP += amount;
+		if (currentHP > maxHP) {
+			currentHP = maxHP;
 		}
 	}
 

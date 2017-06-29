@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Hand
   - Monster
-  - Menu
+  - Pickup
   layers:
   - Default
   - TransparentFX
