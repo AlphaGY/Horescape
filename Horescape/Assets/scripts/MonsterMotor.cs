@@ -14,11 +14,15 @@ public class MonsterMotor : MonoBehaviour
 	private float offset;
 	private Vector3 movement;
 	private float verticalSpeed;
-	private float attackGap = 3.0f;
+	// speed of jumping foward
 	private float dashSpeed;
 	private float jumpHeight = 20.0f;
 	private float gravity = 0.4f;
-	private float countdown;
+	// monster will attack every at most [shortestAttackGap] time & at least [longestAttackGap] time
+	private float shortestAttackGap = 5.0f;
+	private float longestAttackGap = 15.0f;
+	private float countdownS;
+	private float countdownL;
 
 	void Start ()
 	{
@@ -27,37 +31,58 @@ public class MonsterMotor : MonoBehaviour
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform> ();
 		offset = playerTransform.position.z - transform.position.z;
 		dashSpeed = offset / 1.5f;
-		countdown = attackGap;
+		resetAllCountdonw ();
 	}
 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
 		movement = Vector3.zero;
+
+		// fix x
+		movement.x = -1.0f * transform.position.x;
+
 		// forward speed
 		movement.z = playerMotor.forwardSpeed;
 
-		// attack every [attackGap] seconds
-		countdown -= Time.deltaTime;
-		if (countdown <= 0) {
+		countdownS -= Time.deltaTime;
+		countdownL -= Time.deltaTime;
+
+		// attack if hasn't attacked for [longestAttackGap] time
+		if (countdownL < 0) {
 			movement.z += dashSpeed;
 			verticalSpeed = jumpHeight;
-			countdown = attackGap;
+			resetAllCountdonw ();
+		} else{
+			// 50% chance to attack if hasn't attacked for [shortestAttackGap] time
+			if (countdownS < 0) {
+				if (Random.value > 0.5f) {
+					movement.z += dashSpeed;
+					verticalSpeed = jumpHeight;
+					countdownL = longestAttackGap;
+				}
+				countdownS = shortestAttackGap;
+			}
 		}
-        // jumping forward
-        else if (!controller.isGrounded && transform.position.y > 3.0f) {
+
+        // in the air
+		// stop countdown during this period
+        if (!controller.isGrounded && transform.position.y > 3.0f) {
 			movement.z += dashSpeed;
 			verticalSpeed -= gravity;
+			resetAllCountdonw ();
 		}
         // slow down to maintian the distance
+		// stop countdown during this period
         else if ((playerTransform.position.z - transform.position.z) <= offset) {
 			movement.z -= dashSpeed;
-			countdown = attackGap;
+			resetAllCountdonw ();
 		}
 
 		movement.y = verticalSpeed;
 
 		controller.Move (movement * Time.deltaTime);
+
 		// keep the monster from falling into holes
 		if (transform.position.y <= 3.0f) {
 			Vector3 onGround = Vector3.zero;
@@ -68,10 +93,17 @@ public class MonsterMotor : MonoBehaviour
 		}
 	}
 
+
+	private void resetAllCountdonw ()
+	{
+		countdownS = shortestAttackGap;
+		countdownL = longestAttackGap;
+	}
+
 	void OnTriggerEnter (Collider other)
 	{
 		// distroy any obstacles along the way
-		if (other.gameObject.CompareTag ("Hand")) {
+		if (other.gameObject.CompareTag ("Hand") || other.gameObject.CompareTag ("Pickup")) {
 			other.gameObject.SetActive (false);
 		}
 	}

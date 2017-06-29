@@ -11,8 +11,9 @@ public class PickupManager : MonoBehaviour
 	// distance of the pickup ahead of the player
 	private float distance = 12.0f;
 	private List<GameObject> activePickups;
-	private float shortestGap = 5.0f;
-	private float longestGap = 10.0f;
+	// generate a pickup every at most [shortestGap] time & at least [longestGap] time
+	private float shortestGap = 8.0f;
+	private float longestGap = 20.0f;
 	private float countdownS;
 	private float countdownL;
 
@@ -21,8 +22,7 @@ public class PickupManager : MonoBehaviour
 	{
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		activePickups = new List<GameObject> ();
-		countdownS = shortestGap;
-		countdownL = longestGap;
+		resetAllCountdown ();
 	}
 	
 	// Update is called once per frame
@@ -31,24 +31,27 @@ public class PickupManager : MonoBehaviour
 		countdownS -= Time.deltaTime;
 		countdownL -= Time.deltaTime;
 
+		// generate a pickup if hasn't generated any for [longestGap] time
 		if (countdownL < 0) {
 			spwanPickup ();
-			countdownL = longestGap;
-			countdownS = shortestGap;
+			resetAllCountdown ();
 			deletePickup ();
 		} else {
+			// 50% chance to generate a pickup if hasn't generated any for [shortestGap] time
 			if (countdownS < 0) {
 				if (Random.value > 0.5f) {
 					spwanPickup ();
+					countdownL = longestGap;
 				}
 				countdownS = shortestGap;
 			}
 		}
 	}
 
+	// spwan pickup[prefab]
+	// prefab = -1 : spawn a pickup randomly
 	private void spwanPickup (int prefab = -1)
 	{
-		Debug.Log ("pickup");
 		GameObject go;
 		if (prefab == -1) {
 			go = Instantiate (pickupPrefabs [randomPickupIndex ()]) as GameObject;
@@ -74,5 +77,11 @@ public class PickupManager : MonoBehaviour
 			return 0;
 		}
 		return Random.Range (0, pickupPrefabs.Length);
+	}
+
+	private void resetAllCountdown ()
+	{
+		countdownS = shortestGap;
+		countdownL = longestGap;
 	}
 }
