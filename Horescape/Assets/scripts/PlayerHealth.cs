@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
 
 	private PlayerMotor playerMotor;
 	private MonsterMotor monsterMotor;
+	private PickupManager pickupManager;
 	public DeathMenu deathMenu;
 	public Score score;
 
@@ -21,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
 	{
 		playerMotor = GetComponent<PlayerMotor> ();
 		monsterMotor = GameObject.FindGameObjectWithTag ("Monster").GetComponent<MonsterMotor> ();
+		pickupManager = GameObject.FindGameObjectWithTag ("PickupManager").GetComponent<PickupManager> ();
 		currentHP = maxHP;
 	}
 
@@ -53,6 +55,7 @@ public class PlayerHealth : MonoBehaviour
 		// stop the player and the monster from moving
 		playerMotor.enabled = false;
 		monsterMotor.enabled = false;
+		pickupManager.enabled = false;
 		score.enabled = false;
 	}
 }
