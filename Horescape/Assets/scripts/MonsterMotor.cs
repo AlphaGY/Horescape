@@ -6,7 +6,6 @@ public class MonsterMotor : MonoBehaviour
 {
 
 	private CharacterController controller;
-
 	// orginal distance between the monster and the player
 	private PlayerMotor playerMotor;
 	// attack time gap of the monster
@@ -27,8 +26,8 @@ public class MonsterMotor : MonoBehaviour
 	void Start ()
 	{
 		controller = GetComponent<CharacterController> ();
-		playerMotor = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMotor> ();
-		playerTransform = GameObject.FindGameObjectWithTag ("Player").GetComponent<Transform> ();
+		playerMotor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor> ();
+		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 		offset = playerTransform.position.z - transform.position.z;
 		dashSpeed = offset / 1.5f;
 		resetAllCountdonw ();
@@ -53,7 +52,7 @@ public class MonsterMotor : MonoBehaviour
 			movement.z += dashSpeed;
 			verticalSpeed = jumpHeight;
 			resetAllCountdonw ();
-		} else{
+		} else {
 			// 50% chance to attack if hasn't attacked for [shortestAttackGap] time
 			if (countdownS < 0) {
 				if (Random.value > 0.5f) {
@@ -65,9 +64,9 @@ public class MonsterMotor : MonoBehaviour
 			}
 		}
 
-        // in the air
+		// in the air
 		// stop countdown during this period
-        if (!controller.isGrounded && transform.position.y > 3.0f) {
+		if (!controller.isGrounded && transform.position.y > 3.0f) {
 			movement.z += dashSpeed;
 			verticalSpeed -= gravity;
 			resetAllCountdonw ();

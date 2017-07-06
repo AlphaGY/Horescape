@@ -37,7 +37,7 @@ public class PlayerMotor : MonoBehaviour
 		// speed up every [accelerated] seconds
 		countdown -= Time.deltaTime;
 		if (countdown <= 0) {
-			forwardSpeed += 0.2f;
+			forwardSpeed *= 1.2f;
 			countdown = accelerated;
 		}
 		movement.z = forwardSpeed;
