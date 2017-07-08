@@ -38,6 +38,7 @@ public class PlayerMotor : MonoBehaviour
 		countdown -= Time.deltaTime;
 		if (countdown <= 0) {
 			forwardSpeed *= 1.2f;
+			accelerated += 1.0f;
 			countdown = accelerated;
 		}
 		movement.z = forwardSpeed;
@@ -104,7 +105,7 @@ public class PlayerMotor : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag ("Hand")) {
 			other.gameObject.SetActive (false);
-			playerHealth.takeDamage (30);
+			playerHealth.takeDamage (20);
 		} else if (other.gameObject.CompareTag ("Monster")) {
 			playerHealth.takeDamage (40);
 		} else if (other.gameObject.CompareTag ("Pickup")) {

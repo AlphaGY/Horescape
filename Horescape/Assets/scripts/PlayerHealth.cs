@@ -9,7 +9,8 @@ public class PlayerHealth : MonoBehaviour
 	private int maxHP = 100;
 	private int currentHP;
 	private bool isDead = false;
-	public Slider hpBar;
+	public BloodEffect bldEffect;
+	public Camera camera;
 
 	private PlayerMotor playerMotor;
 	private MonsterMotor monsterMotor;
@@ -28,11 +29,12 @@ public class PlayerHealth : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		hpBar.value = currentHP;
+		bldEffect.setEffect (currentHP);
 	}
 
 	public void takeDamage (int amount)
 	{
+		camera.GetComponent<CameraMotor> ().shacking ();
 		currentHP -= amount;
 		if (currentHP <= 0 & !isDead) {
 			death ();

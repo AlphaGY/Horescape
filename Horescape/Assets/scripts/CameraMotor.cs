@@ -8,6 +8,8 @@ public class CameraMotor : MonoBehaviour
 	private Vector3 offset;
 	private Vector3 lastPosition;
 	private float maxY = 6.0f;
+	private float shakingDuration = 0.0f;
+	private float shakeAmount = 0.3f;
 
 	// Use this for initialization
 	void Start ()
@@ -18,7 +20,7 @@ public class CameraMotor : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
 	{
 		Vector3 current = playerTransform.position + offset;
 		current.x = 0;
@@ -33,7 +35,19 @@ public class CameraMotor : MonoBehaviour
 			current.y = maxY;
 		}
 
-		transform.position = current;
 		lastPosition = playerTransform.position + offset;
+
+		// shaking
+		if (shakingDuration > 0) {
+			current += Random.insideUnitSphere * shakeAmount;
+			shakingDuration -= Time.deltaTime;
+		}
+			
+		transform.position = current;
+	}
+
+	public void shacking ()
+	{
+		shakingDuration = 0.4f;
 	}
 }
