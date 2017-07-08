@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class PlayerMotor : MonoBehaviour
 {
 
@@ -19,15 +20,19 @@ public class PlayerMotor : MonoBehaviour
 	private bool jumpFlag = false;
 	private float jumpHeight = 9.0f;
 	private float minMoveDis = 100.0f;
+	public ParticleSystem ps;
 	// ios touch
 	private Vector3 touchOrigin = Vector3.zero;
 	PlayerHealth playerHealth;
+
 
 	void Start ()
 	{
 		controller = GetComponent<CharacterController> ();
 		playerHealth = GetComponent<PlayerHealth> ();
 		countdown = accelerated;
+		//ps = GetComponent<ParticleSystem> ();
+		//ps.Stop ();
 	}
 
 	// Update is called once per frame
@@ -107,8 +112,10 @@ public class PlayerMotor : MonoBehaviour
 			playerHealth.takeDamage (30);
 		} else if (other.gameObject.CompareTag ("Monster")) {
 			playerHealth.takeDamage (40);
-		} else if (other.gameObject.CompareTag ("Pickup")) {
+		} else if (other.gameObject.CompareTag ("Pickup")) 
+		{
 			other.gameObject.SetActive (false);
+			//ps.Play ();
 			playerHealth.regainHealth (20);
 		}
 	}

@@ -10,10 +10,14 @@ public class PlayerHealth : MonoBehaviour
 	private int currentHP;
 	private bool isDead = false;
 	public Slider hpBar;
+	public Image blood;
 
 	private PlayerMotor playerMotor;
 	private MonsterMotor monsterMotor;
 	public DeathMenu deathMenu;
+	public Blood bloodpic1;
+	public Blood2 bloodpic2;
+	public BloodFlash flash;
 	public Score score;
 
 	// Use this for initialization
@@ -28,21 +32,48 @@ public class PlayerHealth : MonoBehaviour
 	void Update ()
 	{
 		hpBar.value = currentHP;
+
 	}
 
 	public void takeDamage (int amount)
 	{
 		currentHP -= amount;
-		if (currentHP <= 0 & !isDead) {
+		if (currentHP <= 0 & !isDead) 
+		{
 			death ();
 		}
+		bloodpic1.displayMenu ();
+		if (currentHP <= 50) 
+		{
+			bloodpic2.displayMenu ();
+		}
+		if (currentHP <= 30) 
+		{
+			flash.displayEffect ();
+		}
+
 	}
 
 	public void regainHealth (int amount)
 	{
 		currentHP += amount;
-		if (currentHP > maxHP) {
+		if (currentHP > maxHP) 
+		{
 			currentHP = maxHP;
+		}
+		if (currentHP > 50) 
+		{
+			bloodpic2.disappear ();
+
+		}
+		if (currentHP > 30) 
+		{
+			flash.disappear ();
+		}
+		if (currentHP == maxHP)
+		{
+			bloodpic1.disappear();
+
 		}
 	}
 
