@@ -49,5 +49,6 @@ public class CameraMotor : MonoBehaviour
 	public void shacking ()
 	{
 		shakingDuration = 0.4f;
+		Handheld.Vibrate ();
 	}
 }
