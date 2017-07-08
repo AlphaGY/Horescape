@@ -20,7 +20,7 @@ public class PlayerMotor : MonoBehaviour
 	private bool jumpFlag = false;
 	private float jumpHeight = 9.0f;
 	private float minMoveDis = 100.0f;
-	public ParticleSystem ps;
+	public BloodEffect ps;
 	// ios touch
 	private Vector3 touchOrigin = Vector3.zero;
 	PlayerHealth playerHealth;
@@ -115,7 +115,7 @@ public class PlayerMotor : MonoBehaviour
 		} else if (other.gameObject.CompareTag ("Pickup")) 
 		{
 			other.gameObject.SetActive (false);
-			//ps.Play ();
+			ps.displayEffect();
 			playerHealth.regainHealth (20);
 		}
 	}
