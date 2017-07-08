@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class BloodEffect : MonoBehaviour
 {
 
-	public GameObject blood1;
-	public GameObject blood2;
+	public GameObject bloodSpot1;
+	public GameObject bloodSpot2;
+	public GameObject bloodFlash;
 
 	// Use this for initialization
 	void Start ()
 	{
-		blood1.SetActive (false);
-		blood2.SetActive (false);
+		bloodSpot1.SetActive (false);
+		bloodSpot2.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -24,21 +25,23 @@ public class BloodEffect : MonoBehaviour
 
 	public void setEffect (int hp)
 	{
+		float opacity = (100 - hp) / 5;
+		bloodFlash.GetComponent<Image> ().color = new Color32 (255, 0, 0, (byte)opacity);
 		if (hp <= 20) {
-			displayBlood (blood1, 2);
-			displayBlood (blood2, 2);
+			displayBlood (bloodSpot1, 2);
+			displayBlood (bloodSpot2, 2);
 		} else if (hp <= 40) {
-			displayBlood (blood1, 2);
-			displayBlood (blood2, 1);
+			displayBlood (bloodSpot1, 2);
+			displayBlood (bloodSpot2, 1);
 		} else if (hp <= 60) {
-			displayBlood (blood1, 1);
-			displayBlood (blood2, 1);
+			displayBlood (bloodSpot1, 1);
+			displayBlood (bloodSpot2, 1);
 		} else if (hp <= 80) {
-			displayBlood (blood1, 1);
-			blood2.SetActive (false);
+			displayBlood (bloodSpot1, 1);
+			bloodSpot2.SetActive (false);
 		} else {
-			blood1.SetActive (false);
-			blood2.SetActive (false);
+			bloodSpot1.SetActive (false);
+			bloodSpot2.SetActive (false);
 		}
 	}
 
@@ -58,13 +61,13 @@ public class BloodEffect : MonoBehaviour
 	private void transparency25 (GameObject blood)
 	{
 		blood.SetActive (true);
-		blood.GetComponent<Image>().color = new Color32(255,255,255,50);
+		blood.GetComponent<Image> ().color = new Color32 (255, 255, 255, 50);
 	}
 
 	// a little bit transparent
 	private void transparency50 (GameObject blood)
 	{
 		blood.SetActive (true);
-		blood.GetComponent<Image>().color = new Color32(255,255,255,100);
+		blood.GetComponent<Image> ().color = new Color32 (255, 255, 255, 100);
 	}
 }
