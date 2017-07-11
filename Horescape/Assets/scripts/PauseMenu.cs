@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		pause.gameObject.SetActive (false);
+		pause.gameObject.SetActive (true);
 		resume.gameObject.SetActive (false);
 		exit.gameObject.SetActive (false);
 	}
