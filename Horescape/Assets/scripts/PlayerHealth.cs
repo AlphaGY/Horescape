@@ -18,12 +18,17 @@ public class PlayerHealth : MonoBehaviour
 	public DeathMenu deathMenu;
 	public Score score;
 
+	//animation: Death
+	Animator anim;
+
 	// Use this for initialization
 	void Start ()
 	{
 		playerMotor = GetComponent<PlayerMotor> ();
 		monsterMotor = GameObject.FindGameObjectWithTag ("Monster").GetComponent<MonsterMotor> ();
 		currentHP = maxHP;
+		//get animator
+		anim = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -53,6 +58,7 @@ public class PlayerHealth : MonoBehaviour
 	{
 		isDead = true;
 		deathMenu.displayMenu ();
+		anim.SetBool("death",true);
 		// stop the player and the monster from moving
 		playerMotor.enabled = false;
 		monsterMotor.enabled = false;

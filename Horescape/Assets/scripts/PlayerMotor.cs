@@ -22,17 +22,25 @@ public class PlayerMotor : MonoBehaviour
 	// ios touch
 	private Vector3 touchOrigin = Vector3.zero;
 	PlayerHealth playerHealth;
+	//player animator
+	private Animator anim;
 
 	void Start ()
 	{
 		controller = GetComponent<CharacterController> ();
 		playerHealth = GetComponent<PlayerHealth> ();
 		countdown = accelerated;
+		anim = GetComponent<Animator> ();
 	}
 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+		//initial animator
+		anim.SetBool ("hit", false);
+		anim.SetBool ("afraidrun", false);
+		anim.SetBool ("collect", false);
+
 		movement = Vector3.zero;
 		// speed up every [accelerated] seconds
 		countdown -= Time.deltaTime;
@@ -104,11 +112,14 @@ public class PlayerMotor : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.gameObject.CompareTag ("Hand")) {
+			anim.SetBool ("hit", true);
 			other.gameObject.SetActive (false);
 			playerHealth.takeDamage (20);
 		} else if (other.gameObject.CompareTag ("Monster")) {
+			anim.SetBool ("afraidrun", true);
 			playerHealth.takeDamage (40);
 		} else if (other.gameObject.CompareTag ("Pickup")) {
+			anim.SetBool ("collect", true);
 			other.gameObject.SetActive (false);
 			playerHealth.regainHealth (20);
 		}
