@@ -7,12 +7,14 @@ public class PauseMenu : MonoBehaviour {
 
 	public Button pause;
 	public Button resume;
+	public Button restart;
 	public Button exit;
 
 	// Use this for initialization
 	void Start () {
 		pause.gameObject.SetActive (true);
 		resume.gameObject.SetActive (false);
+		restart.gameObject.SetActive (false);
 		exit.gameObject.SetActive (false);
 	}
 	
@@ -23,12 +25,14 @@ public class PauseMenu : MonoBehaviour {
 	public void clickPause(){
 		pause.gameObject.SetActive (false);
 		resume.gameObject.SetActive (true);
+		restart.gameObject.SetActive (true);
 		exit.gameObject.SetActive (true);
 	}
 
 	public void clickResume(){
 		pause.gameObject.SetActive (true);
 		resume.gameObject.SetActive (false);
+		restart.gameObject.SetActive (false);
 		exit.gameObject.SetActive (false);
 	}
 

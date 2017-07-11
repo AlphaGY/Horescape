@@ -17,7 +17,7 @@ public class PlayerMotor : MonoBehaviour
 	private float gravity = 0.4f;
 	private bool possibleJump = false;
 	private bool jumpFlag = false;
-	private float jumpHeight = 9.0f;
+	private float jumpHeight = 11.0f;
 	private float minMoveDis = 100.0f;
 	// ios touch
 	private Vector3 touchOrigin = Vector3.zero;
@@ -36,6 +36,7 @@ public class PlayerMotor : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+		Debug.Log(controller.isGrounded);
 		//initial animator
 		anim.SetBool ("hit", false);
 		anim.SetBool ("afraidrun", false);

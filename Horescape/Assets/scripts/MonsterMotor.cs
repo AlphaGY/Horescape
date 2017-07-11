@@ -32,7 +32,7 @@ public class MonsterMotor : MonoBehaviour
 		playerMotor = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMotor> ();
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		offset = playerTransform.position.z - transform.position.z;
-		dashSpeed = offset / 1.5f;
+		dashSpeed = offset * 1.2f;
 		resetAllCountdonw ();
 		anim = GetComponent<Animation> ();
 	}
@@ -42,7 +42,7 @@ public class MonsterMotor : MonoBehaviour
 	{
 		if (controller.isGrounded) {
 			//anim.Play("walk");
-			anim.Play("zombieRun");
+			anim.Play ("zombieRun");
 		}
 
 		movement = Vector3.zero;
@@ -59,7 +59,7 @@ public class MonsterMotor : MonoBehaviour
 		// attack if hasn't attacked for [longestAttackGap] time
 		if (countdownL < 0) {
 			//animation
-			anim.Play("zombieRun");
+			anim.Play ("zombieRun");
 			anim.Play ("attack1");
 			//movement
 			movement.z += dashSpeed;
@@ -70,7 +70,7 @@ public class MonsterMotor : MonoBehaviour
 			if (countdownS < 0) {
 				if (Random.value > 0.5f) {
 					//animation
-					anim.Play("zombieRun");
+					anim.Play ("zombieRun");
 					anim.Play ("attack2");
 					//movement
 					movement.z += dashSpeed;
