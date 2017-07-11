@@ -11,6 +11,7 @@ public class MonsterMotor : MonoBehaviour
 	// attack time gap of the monster
 	private Transform playerTransform;
 	private float offset;
+	private float monsterHeight = 0.55f;
 	private Vector3 movement;
 	private float verticalSpeed;
 	// speed of jumping foward
@@ -26,8 +27,8 @@ public class MonsterMotor : MonoBehaviour
 	void Start ()
 	{
 		controller = GetComponent<CharacterController> ();
-		playerMotor = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMotor> ();
-		playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+		playerMotor = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMotor> ();
+		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		offset = playerTransform.position.z - transform.position.z;
 		dashSpeed = offset / 1.5f;
 		resetAllCountdonw ();
@@ -66,7 +67,7 @@ public class MonsterMotor : MonoBehaviour
 
 		// in the air
 		// stop countdown during this period
-		if (!controller.isGrounded && transform.position.y > 3.0f) {
+		if (!controller.isGrounded && transform.position.y > monsterHeight) {
 			movement.z += dashSpeed;
 			verticalSpeed -= gravity;
 			resetAllCountdonw ();
@@ -83,11 +84,11 @@ public class MonsterMotor : MonoBehaviour
 		controller.Move (movement * Time.deltaTime);
 
 		// keep the monster from falling into holes
-		if (transform.position.y <= 3.0f) {
+		if (transform.position.y <= monsterHeight) {
 			Vector3 onGround = Vector3.zero;
 			onGround.x = transform.position.x;
 			onGround.z = transform.position.z;
-			onGround.y = 3.0f;
+			onGround.y = monsterHeight;
 			transform.position = onGround;
 		}
 	}
