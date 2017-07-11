@@ -7,6 +7,7 @@ public class PlayerMotor : MonoBehaviour
 {
 
 	private CharacterController controller;
+	public MedicineEffect meEffect;
 	private Vector3 movement;
 	public float forwardSpeed = 5.0f;
 	// accelerated speed
@@ -121,6 +122,7 @@ public class PlayerMotor : MonoBehaviour
 			playerHealth.takeDamage (40);
 		} else if (other.gameObject.CompareTag ("Pickup")) {
 			anim.SetBool ("collect", true);
+			meEffect.displayEffect ();
 			other.gameObject.SetActive (false);
 			playerHealth.regainHealth (20);
 		}
