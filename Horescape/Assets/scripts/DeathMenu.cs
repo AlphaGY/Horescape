@@ -23,7 +23,7 @@ public class DeathMenu : MonoBehaviour
 	public void displayMenu ()
 	{
 		pauseMenu.gameObject.SetActive (false);
-		deathMessage.text = "Your Score:\n" + score.scoreStr.text;
+		deathMessage.text = score.scoreStr.text;
 		gameObject.SetActive (true);
 	}
 }

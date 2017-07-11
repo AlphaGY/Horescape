@@ -9,13 +9,16 @@ public class GamePlay : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		Time.timeScale = 0;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		
+	}
+
+	public void StartGame ()
+	{
+		SceneManager.LoadScene ("Prototype");
 	}
 
 	public void Pause ()
@@ -31,10 +34,11 @@ public class GamePlay : MonoBehaviour
 
 	public void Restart ()
 	{
-		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+		SceneManager.LoadScene ("Prototype");
 	}
 
-	public void Exit(){
-		SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+	public void Exit ()
+	{
+		SceneManager.LoadScene ("MainMenu");
 	}
 }
