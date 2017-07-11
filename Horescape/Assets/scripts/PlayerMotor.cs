@@ -7,6 +7,7 @@ public class PlayerMotor : MonoBehaviour
 {
 
 	private CharacterController controller;
+	public IncreaseAnimation increaseAnimation;
 	private Vector3 movement;
 	public float forwardSpeed = 5.0f;
 	// accelerated speed
@@ -42,6 +43,7 @@ public class PlayerMotor : MonoBehaviour
 			countdown = accelerated;
 		}
 		movement.z = forwardSpeed;
+
 		// left & right movement from input
 		movement.x = Input.GetAxisRaw ("Horizontal") * -5.0f;
 
@@ -100,6 +102,10 @@ public class PlayerMotor : MonoBehaviour
 		}
 
 	}
+	public float getSpeed()
+	{
+		return forwardSpeed;
+	}
 
 	void OnTriggerEnter (Collider other)
 	{
@@ -109,8 +115,11 @@ public class PlayerMotor : MonoBehaviour
 		} else if (other.gameObject.CompareTag ("Monster")) {
 			playerHealth.takeDamage (40);
 		} else if (other.gameObject.CompareTag ("Pickup")) {
+			increaseAnimation.displayEffect ();
 			other.gameObject.SetActive (false);
 			playerHealth.regainHealth (20);
+
+
 		}
 	}
 }
