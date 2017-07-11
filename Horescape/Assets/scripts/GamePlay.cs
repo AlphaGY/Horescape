@@ -34,11 +34,13 @@ public class GamePlay : MonoBehaviour
 
 	public void Restart ()
 	{
+		Resume ();
 		SceneManager.LoadScene ("Prototype");
 	}
 
 	public void Exit ()
 	{
+		Resume ();
 		SceneManager.LoadScene ("MainMenu");
 	}
 }

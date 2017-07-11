@@ -16,13 +16,15 @@ public class MonsterMotor : MonoBehaviour
 	private float verticalSpeed;
 	// speed of jumping foward
 	private float dashSpeed;
-	private float jumpHeight = 20.0f;
+	private float jumpHeight = 6.0f;
 	private float gravity = 0.4f;
 	// monster will attack every at most [shortestAttackGap] time & at least [longestAttackGap] time
 	private float shortestAttackGap = 5.0f;
 	private float longestAttackGap = 15.0f;
 	private float countdownS;
 	private float countdownL;
+	//monster animation
+	private Animation anim;
 
 	void Start ()
 	{
@@ -30,13 +32,19 @@ public class MonsterMotor : MonoBehaviour
 		playerMotor = GameObject.FindGameObjectWithTag ("Player").GetComponent<PlayerMotor> ();
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		offset = playerTransform.position.z - transform.position.z;
-		dashSpeed = offset / 1.5f;
+		dashSpeed = offset * 1.2f;
 		resetAllCountdonw ();
+		anim = GetComponent<Animation> ();
 	}
 
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+		if (controller.isGrounded) {
+			//anim.Play("walk");
+			anim.Play ("zombieRun");
+		}
+
 		movement = Vector3.zero;
 
 		// fix x
@@ -50,6 +58,10 @@ public class MonsterMotor : MonoBehaviour
 
 		// attack if hasn't attacked for [longestAttackGap] time
 		if (countdownL < 0) {
+			//animation
+			anim.Play ("zombieRun");
+			anim.Play ("attack1");
+			//movement
 			movement.z += dashSpeed;
 			verticalSpeed = jumpHeight;
 			resetAllCountdonw ();
@@ -57,6 +69,10 @@ public class MonsterMotor : MonoBehaviour
 			// 50% chance to attack if hasn't attacked for [shortestAttackGap] time
 			if (countdownS < 0) {
 				if (Random.value > 0.5f) {
+					//animation
+					anim.Play ("zombieRun");
+					anim.Play ("attack2");
+					//movement
 					movement.z += dashSpeed;
 					verticalSpeed = jumpHeight;
 					countdownL = longestAttackGap;

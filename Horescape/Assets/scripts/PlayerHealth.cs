@@ -14,16 +14,23 @@ public class PlayerHealth : MonoBehaviour
 
 	private PlayerMotor playerMotor;
 	private MonsterMotor monsterMotor;
+	private CameraMotor cameraMotor;
 	public PickupManager pickupManager;
 	public DeathMenu deathMenu;
 	public Score score;
+
+	//animation: Death
+	Animator anim;
 
 	// Use this for initialization
 	void Start ()
 	{
 		playerMotor = GetComponent<PlayerMotor> ();
 		monsterMotor = GameObject.FindGameObjectWithTag ("Monster").GetComponent<MonsterMotor> ();
+		cameraMotor = camera.GetComponent<CameraMotor> ();
 		currentHP = maxHP;
+		//get animator
+		anim = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -53,9 +60,11 @@ public class PlayerHealth : MonoBehaviour
 	{
 		isDead = true;
 		deathMenu.displayMenu ();
+		anim.SetBool("death",true);
 		// stop the player and the monster from moving
 		playerMotor.enabled = false;
 		monsterMotor.enabled = false;
+		cameraMotor.enabled = false;
 		pickupManager.enabled = false;
 		score.enabled = false;
 	}

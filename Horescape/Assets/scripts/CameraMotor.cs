@@ -10,6 +10,7 @@ public class CameraMotor : MonoBehaviour
 	private float maxY = 6.0f;
 	private float shakingDuration = 0.0f;
 	private float shakeAmount = 0.3f;
+	private Quaternion cameraAngle;
 
 	// Use this for initialization
 	void Start ()
@@ -17,6 +18,7 @@ public class CameraMotor : MonoBehaviour
 		playerTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 		offset = transform.position - playerTransform.position;
 		lastPosition = transform.position;
+		cameraAngle = transform.rotation;
 	}
 
 	// Update is called once per frame
@@ -29,6 +31,8 @@ public class CameraMotor : MonoBehaviour
 			transform.Rotate (0.4f, 0, 0);
 		} else if (current.y < lastPosition.y) {
 			transform.Rotate (-0.4f, 0, 0);
+		} else {
+			transform.rotation = cameraAngle;
 		}
 
 		if (current.y > maxY) {
